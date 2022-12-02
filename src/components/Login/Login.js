@@ -41,7 +41,7 @@ const Login = () => {
 
     const userAttendance = (useAtd) => {
         console.log(useAtd)
-        fetch('http://localhost:5000/useratd', {
+        fetch('https://nexis-server-site.vercel.app/useratd', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

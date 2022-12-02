@@ -7,7 +7,7 @@ const Attendance = () => {
     const { data: attendance = [], refetch } = useQuery({
         queryKey: ['attendance'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/attendance', {
+            const res = await fetch('https://nexis-server-site.vercel.app/attendance', {
                 headers: {
                     authorization: `bearer ${localStorage.getItem('accessToken')}`
                 }
