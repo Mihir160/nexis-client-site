@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import img from '../../img/ultimate hrm logo-05-02 2.png'
+import { AuthContext } from '../../Contexts/Authprovider';
 const Attendance = () => {
+    const {loading} = useContext(AuthContext)
     const { data: attendance = [], refetch } = useQuery({
         queryKey: ['attendance'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/attendance', {
                 headers: {
-
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
                 }
             })
             const data = await res.json();
             return data;
-            refetch()
+            
         }
     })
-    console.log(attendance)
+    if(loading){
+        refetch()
+    }
+ 
     return (
         <div>
             <div className='mt-2'>

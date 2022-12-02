@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Contexts/Authprovider';
 import img from '../../img/istockphoto.png'
 import logo from '../../img/ultimate hrm logo-05-02 2.png'
 const NextStepTwo = ({ page, setPage, formData,setFormData }) => {
     const {creatUser} = useContext(AuthContext)
+    const navigate = useNavigate()
     const DatePicker = new Date();
     const date = `${DatePicker.getDate()}/${DatePicker.getMonth() + 1
         }/${DatePicker.getFullYear()}`;
@@ -25,13 +27,24 @@ const NextStepTwo = ({ page, setPage, formData,setFormData }) => {
 
             }
             addUser(data)
-            console.log(data)
             
         })
-        .catch(error => {
-            console.log(error)
+        .then(data =>{
+            getUserToken(formData.email)
+        })
+      
+    }
+
+    const getUserToken = email => {
+        fetch(`http://localhost:5000/jwt?email=${email}`)
+        .then(res => res.json())
+        .then(data =>{
+            if(data.accessToken){
+                localStorage.setItem('acessTOken', data.accessToken)
+                navigate('/login')
+            }
            
-        });
+        })
     }
 
     const addUser = (data) =>{
